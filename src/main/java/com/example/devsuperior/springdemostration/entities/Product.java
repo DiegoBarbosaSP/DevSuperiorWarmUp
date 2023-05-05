@@ -1,19 +1,36 @@
 package com.example.devsuperior.springdemostration.entities;
 
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.springframework.core.codec.StringDecoder;
 
+@Entity
+@Table(name = "tb_product")
 @Getter
 @Setter
 @SuperBuilder
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class Product {
+    @Id
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private long id;
     private String name;
     private Double price;
 
     // association
+    @ManyToOne
+    @JoinColumn(name = "departament_id")
     private Departament departament;
+
+    public Product() {
+    }
+    public Product(long id, String name, Double price, Departament departament) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.departament = departament;
+    }
 
 }
